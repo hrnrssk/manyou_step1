@@ -1,0 +1,29 @@
+<%= form_with(model: task, local: true) do |form| %>
+  <% if task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.label :name, 'タスク名' %>
+  <%= form.text_field :name %>
+  <%= form.label :detail, '内容' %>
+  <%= form.text_area :detail %>
+  <%= form.label :deadline, '終了期限' %>
+  <%= form.text_field :deadline %>
+  <%= form.label :status, '状態' %>
+  <%= form.text_field :status %>
+  <%= form.label :priority, '優先順位' %>
+  <%= form.text_field :priority %>
+  <%= form.label :author, '作者' %>
+  <%= form.text_field :author %>
+
+  <%= form.submit '登録する' %>
+
+<% end %>
