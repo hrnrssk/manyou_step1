@@ -27,7 +27,6 @@ describe 'タスク管理機能', type: :system do
         # 4. clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
         # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
         # ここにタスク詳細ページに、テストコードで作成したデータがタスク詳細画面にhave_contentされているか（含まれているか）を確認（期待）するコードを書く
-        binding.irb
         expect(page).to have_content 'テスト０１'
         expect(page).to have_content 'テスト０１をテストする'
         expect(page).to have_content '2020/08/27'
@@ -45,7 +44,6 @@ describe 'タスク管理機能', type: :system do
         visit tasks_path
         # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
         # have_contentされているか（含まれているか）ということをexpectする（確認・期待する）
-        binding.irb
         expect(page).to have_content 'task'
         # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
@@ -70,7 +68,6 @@ describe 'タスク管理機能', type: :system do
         # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
         # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
         click_on '登録する'
-        binding.irb
         expect(page).to have_content 'テスト０２'
       end
     end
