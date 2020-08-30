@@ -11,7 +11,15 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.create(task_params)
-    redirect_to new_task_path
+    respond_to do |format|
+      if @task.save
+        format.html { redirect_to @task, notice: 'Feed was successfully created.' }
+        format.json { render :show, status: :created, location: @task }
+      else
+        format.html { render :new }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def show
