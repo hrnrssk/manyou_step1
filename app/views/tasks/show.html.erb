@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+<h1>タスク詳細</h1>
+
+<p>
+  <strong>タスク名:</strong>
+  <%= @task.name %>
+</p>
+
+<p>
+  <strong>内容:</strong>
+  <%= @task.detail %>
+</p>
+
+<p>
+  <strong>終了期限:</strong>
+  <%= @task.deadline %>
+</p>
+
+<p>
+  <strong>状態:</strong>
+  <%= @task.status %>
+</p>
+
+<p>
+  <strong>優先順位:</strong>
+  <%= @task.priority %>
+</p>
+
+<p>
+  <strong>作者:</strong>
+  <%= @task.author %>
+</p>
+
+<%= link_to 'Back', tasks_path %>

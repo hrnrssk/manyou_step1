@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* markdown記法でテーブルスキーマを書く
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* ModelName:task
+- column:name, type:string
+- column:detail, type:text
+- column:reated_at, type:datetime
+- column:updated_at, type:datetime
+- column:deadline, type:string
+- column:status, type:string
+- column:priority, type:string
+- column:author, type:string
