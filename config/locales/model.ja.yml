@@ -4,9 +4,13 @@ ja:
       task: タスク
       user: ユーザー
     attributes:
-      blog:
+      task:
         name: タスク名
         detail: 内容
+        deadline: 終了期限
+        status: 状態
+        priority: 優先順位
+        author: 作者
       user:
         name: タスク名
         username: 名前
