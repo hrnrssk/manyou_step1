@@ -1,6 +1,6 @@
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
-  let(:task_let) { FactoryBot.create(:task, name: 'task', detail: 'テスト', deadline: '2020/08/31', status: '未着手', priority: '1', author: 'sasaki') }
+  let(:task_let) { FactoryBot.create(:task, name: 'task', detail: 'テスト', deadline: '2020/08/1', status: '未着手', priority: '1', author: 'sasaki') }
   before do
     # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
     FactoryBot.create(:task)
@@ -53,12 +53,26 @@ describe 'タスク管理機能', type: :system do
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
         # テストで使用するためのタスクを作成
-        # task = FactoryBot.create(:task, name: 'task', detail: 'テスト', deadline: '2020/08/31', status: '未着手', priority: '1', author: 'sasaki')
         task = task_let
         # タスク一覧ページに遷移
         visit tasks_path
         task_list = all('.task_row')
+        binding.irb
         expect(task_list[0]).to have_content 'task'
+      end
+    end
+    context 'タスクが終了期限の降順にソートされている場合' do
+      it '"終了期限でソートする"ボタンを押すと終了期限が遅いタスクから降順で並び替えられる' do
+        # テストで使用するためのタスクを作成
+        task = task_let
+        # タスク一覧ページに遷移
+        visit tasks_path
+        click_on '終了期限でソートする'
+        task_list = all('.task_row')
+        binding.irb
+        expect(task_list[0]).to have_content 'Factoryで作ったデフォルトのタスク２'
+        expect(task_list[1]).to have_content 'Factoryで作ったデフォルトのタスク１'
+        expect(task_list[2]).to have_content 'task'
       end
     end
   end

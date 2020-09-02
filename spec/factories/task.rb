@@ -5,7 +5,8 @@ FactoryBot.define do
     factory :task do
       name { 'Factoryで作ったデフォルトのタスク１' }
       detail { 'Factoryで作ったデフォルトのコンテント１' }
-      deadline { 'Factoryで作ったデフォルトの終了期限１' }
+      # deadline { 'Factoryで作ったデフォルトの終了期限１' }
+      deadline { '2020/08/10' }
       status { 'Factoryで作ったデフォルトの状態１' }
       priority { 'Factoryで作ったデフォルトの優先順位１' }
       author { 'Factoryで作ったデフォルトの作者１' }
@@ -15,7 +16,8 @@ FactoryBot.define do
     factory :second_task, class: Task do
       name { 'Factoryで作ったデフォルトのタスク２' }
       detail { 'Factoryで作ったデフォルトのコンテント２' }
-      deadline { 'Factoryで作ったデフォルトの終了期限２' }
+      # deadline { 'Factoryで作ったデフォルトの終了期限２' }
+      deadline { '2020/08/20' }
       status { 'Factoryで作ったデフォルトの状態２' }
       priority { 'Factoryで作ったデフォルトの優先順位２' }
       author { 'Factoryで作ったデフォルトの作者２' }
