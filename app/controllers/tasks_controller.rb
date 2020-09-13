@@ -9,6 +9,8 @@ class TasksController < ApplicationController
       @tasks = @tasks.search_with_status(params[:task][:status]) if params[:task][:status].present?
     elsif params[:sort_expired].present?
       @tasks = Task.all.order(deadline: :desc)
+    elsif params[:sort_priority].present?
+      @tasks = Task.all.order(priority: :asc)
     end
     # @tasks = @tasks.order(deadline: :desc) if params[:sort_expired].present?
   end
@@ -18,7 +20,6 @@ class TasksController < ApplicationController
   end
 
   def create
-    binding.irb
     @task = Task.create(task_params)
     respond_to do |format|
       if @task.save

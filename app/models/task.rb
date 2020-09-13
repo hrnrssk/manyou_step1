@@ -10,5 +10,6 @@ class Task < ApplicationRecord
   scope :search_with_status, -> (search_params) { where(['status = ?', "#{ search_params }"]) }
   scope :search_with_name_and_status, -> (name, status) { where(['name LIKE ? and status = ?', "%#{ name }%", "#{ status }"])}
 
-  enum priority:{ '高': 1, '中': 2, '低': 3 }
+  # enum priority:[:beef, :fish, :pork]
+  enum priority:{ 高: 0, 中: 1, 低: 2 }
 end
