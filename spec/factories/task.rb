@@ -22,4 +22,13 @@ FactoryBot.define do
       priority { 'Factoryで作ったデフォルトの優先順位２' }
       author { 'Factoryで作ったデフォルトの作者２' }
     end
+    factory :third_task, class: Task do
+      name { 'Factoryで作ったデフォルトのタスク3' }
+      detail { 'Factoryで作ったデフォルトのコンテント3' }
+      # deadline { 'Factoryで作ったデフォルトの終了期限２' }
+      deadline { '2020/08/10' }
+      status { 'Factoryで作ったデフォルトの状態3' }
+      priority { 'Factoryで作ったデフォルトの優先順位3' }
+      author { 'Factoryで作ったデフォルトの作者3' }
+    end
 end

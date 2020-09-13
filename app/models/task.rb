@@ -5,9 +5,10 @@ class Task < ApplicationRecord
   validates :status, presence: true, length: { maximum: 30 }
   validates :priority, presence: true, length: { maximum: 30 }
   validates :author, presence: true, length: { maximum: 30 }
-  enum status:{
-    未着手: 0,
-    着手中: 1,
-    完了: 2
-  }
+
+  scope :search_with_name, -> (search_params) { where(['name LIKE ?', "%#{ search_params }%"]) }
+  scope :search_with_status, -> (search_params) { where(['status = ?', "#{ search_params }"]) }
+  scope :search_with_name_and_status, -> (name, status) { where(['name LIKE ? and status = ?', "%#{ name }%", "#{ status }"])}
+
+  enum priority:{ '高': 1, '中': 2, '低': 3 }
 end

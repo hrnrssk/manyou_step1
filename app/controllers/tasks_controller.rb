@@ -2,11 +2,15 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:sort_expired]
+    @tasks = Task.all.order(created_at: :desc)
+    if params[:task].present?
+      @tasks = @tasks.search_with_name_and_status(params[:task][:name], params[:task][:status]) if params[:task][:name].present? && params[:task][:status].present?
+      @tasks = @tasks.search_with_name(params[:task][:name]) if params[:task][:name].present?
+      @tasks = @tasks.search_with_status(params[:task][:status]) if params[:task][:status].present?
+    elsif params[:sort_expired].present?
       @tasks = Task.all.order(deadline: :desc)
-    else
-      @tasks = Task.all.order(created_at: :desc)
     end
+    # @tasks = @tasks.order(deadline: :desc) if params[:sort_expired].present?
   end
 
   def new
@@ -14,6 +18,7 @@ class TasksController < ApplicationController
   end
 
   def create
+    binding.irb
     @task = Task.create(task_params)
     respond_to do |format|
       if @task.save
@@ -62,4 +67,29 @@ class TasksController < ApplicationController
       params.require(:task).permit(:name, :detail, :deadline, :status, :priority, :author)
     end
 
+    # def search_params
+    #   params.require(:task).permit(:name, :detail, :deadline, :status, :priority, :author, :sort_expired, :search)
+    # end
+
+    # def search_tasks(search_params)
+    #   if search_params[:name].blank? && search_params[:status].blank?
+    #     @tasks = @tasks
+    #   elsif search_params[:status].blank?
+    #     @tasks = @tasks.search_with_name(search_params)
+    #   elsif search_params[:name].blank?
+    #     @tasks = @tasks.search_with_status(search_params)
+    #   else
+    #     @tasks = @tasks.search_with_name_and_status(search_params)
+    #   end
+    # end
+  
+    # def sort_tasks(search_params)
+    #   if search_params[:sort_expired] == t('tasks.deadline_sort_desc')
+    #     @tasks = @tasks.order(deadline: :desc)
+    #   elsif search_params[:sort_expired] == t('tasks.created_at_sort_desc')
+    #     @tasks = @tasks.order(created_at: :desc)
+    #   else
+    #     @tasks = @tasks
+    #   end
+    # end
 end

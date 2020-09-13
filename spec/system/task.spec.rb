@@ -19,7 +19,7 @@ describe 'タスク管理機能', type: :system do
         # ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
         fill_in '内容', with: 'テスト０１をテストする'
         fill_in '終了期限', with: '2020/08/27'
-        fill_in '状態', with: '未着手'
+        select '未着手', from: '状態'
         fill_in '優先順位', with: '3'
         fill_in '作者', with: '佐々木'
         # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
@@ -31,6 +31,7 @@ describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'テスト０１'
         expect(page).to have_content 'テスト０１をテストする'
         expect(page).to have_content '2020/08/27'
+        expect(page).to have_content '未着手'
         expect(page).to have_content '3'
         expect(page).to have_content '佐々木'
       end
@@ -89,13 +90,53 @@ describe 'タスク管理機能', type: :system do
         # ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
         fill_in '内容', with: 'テスト０２をテストする'
         fill_in '終了期限', with: '2020/08/30'
-        fill_in '状態', with: '未着手'
+        select '未着手', from: '状態'
         fill_in '優先順位', with: '4'
         fill_in '作者', with: '洋典'
         # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
         # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
         click_on '登録する'
         expect(page).to have_content 'テスト０２'
+      end
+    end
+  end
+  describe 'タスク管理機能', type: :system do
+    describe '検索機能' do
+      before do
+        # 必要に応じて、テストデータの内容を変更して構わない
+        FactoryBot.create(:task, name: 'task1', detail: 'テスト1', deadline: '2020/08/1', status: '着手中', priority: '1', author: 'sasaki')
+        FactoryBot.create(:second_task, name: 'task2', detail: 'テスト2', deadline: '2020/08/2', status: '未着手', priority: '2', author: 'hironori')
+      end
+      context 'タイトルであいまい検索をした場合' do
+        it "検索キーワードを含むタスクで絞り込まれる" do
+          visit tasks_path
+          # タスクの検索欄に検索ワードを入力する (例: task)
+          fill_in 'タスク名で検索', with: 'task1'
+          # 検索ボタンを押す
+          click_on '検索'
+          expect(page).to have_content 'task1'
+          expect(page).not_to have_content 'task2'
+        end
+      end
+      context 'ステータス検索をした場合' do
+        it "ステータスに完全一致するタスクが絞り込まれる" do
+          # ここに実装する
+          # プルダウンを選択する「select」について調べてみること
+          visit tasks_path
+          select '未着手', from: '状態'
+          click_on '検索'
+          expect(page).to have_content '未着手'
+        end
+      end
+      context 'タイトルのあいまい検索とステータス検索をした場合' do
+        it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+          # ここに実装する
+          visit tasks_path
+          fill_in 'タスク名で検索', with: 'task'
+          select '未着手', from: '状態'
+          click_on '検索'
+          expect(page).to have_content 'task2'
+        end
       end
     end
   end
