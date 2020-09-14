@@ -69,11 +69,12 @@ describe 'タスク管理機能', type: :system do
         # タスク一覧ページに遷移
         visit tasks_path
         click_on '終了期限でソートする'
-        task_list = all('.task_row')
+        expect(all('.task_row')[0]).to have_content '2020/08/20'
+        expect(all('.task_row')[1]).to have_content '2020/08/10'
+        expect(all('.task_row')[2]).to have_content '2020/08/01'
         # binding.irb
-        expect(task_list[0]).to have_content '2020/08/20'
-        expect(task_list[1]).to have_content '2020/08/10'
-        expect(task_list[2]).to have_content '2020/08/01'
+        # all('tr td')[6].click_on '詳細'
+        # expect(page).to have_content '2020/08/20'
       end
     end
     context 'タスクが優先順位の高い順にソートされている場合' do
@@ -83,11 +84,12 @@ describe 'タスク管理機能', type: :system do
           # タスク一覧ページに遷移
         visit tasks_path
         click_on '優先順位でソートする'
-        task_list = all('.task_row')
+        expect(all('.task_row')[0]).to have_content '高'
+        expect(all('.task_row')[1]).to have_content '中'
+        expect(all('.task_row')[2]).to have_content '低'
         # binding.irb
-        expect(task_list[0]).to have_content '高'
-        expect(task_list[1]).to have_content '中'
-        expect(task_list[2]).to have_content '低'
+        # all('tr td')[6].click_on '詳細'
+        # expect(page).to have_content '高'
       end
     end
   end
