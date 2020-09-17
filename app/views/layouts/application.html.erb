@@ -4,11 +4,16 @@
     <title>Manyoukadai</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width">
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  <header class="header">
+      <div class="newfeed">
+        <%= link_to 'タスク登録', new_task_path %>
+      </div>
+  </header>
   <body>
     <%= yield %>
   </body>

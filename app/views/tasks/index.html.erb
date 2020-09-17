@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 <%= form_with(model: @tasks, method: :get, url: tasks_path, local: true) do |f| %>
-<h1>タスク一覧</h1>
+<h1 class="index_task">タスク一覧</h1>
 
   <div class="task_name">
     <%= f.label(:name, 'タスク名で検索') %>
@@ -15,7 +15,7 @@
   <%= f.submit('検索') %>
 <% end %>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>タスク名</th>
@@ -30,23 +30,21 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr class="task_row">
-        <td><%= task.name %></td>
-        <td><%= task.detail %></td>
-        <td><%= task.deadline %></td>
-        <td><%= task.status %></td>
-        <td><%= task.priority %></td>
-        <td><%= task.author %></td>
-        <td><%= link_to '詳細', task %></td>
-        <td><%= link_to '編集', edit_task_path(task) %></td>
-        <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="task_name"><%= task.name %></td>
+        <td class="task_detail"><%= task.detail %></td>
+        <td class="task_deadline"><%= task.deadline %></td>
+        <td class="task_status"><%= task.status %></td>
+        <td class="task_priority"><%= task.priority %></td>
+        <td class="task_author"><%= task.author %></td>
+        <td><%= link_to '詳細', task, class: 'btn btn-primary' %></td>
+        <td><%= link_to '編集', edit_task_path(task), class: 'btn btn-success' %></td>
+        <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
     <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %><br>
-    <%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %>
+    <%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %><br>
     <%= paginate @tasks %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New task', new_task_path %>
