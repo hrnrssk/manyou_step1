@@ -16,11 +16,11 @@
   <%= form.label :detail, '内容' %>
   <%= form.text_area :detail %>
   <%= form.label :deadline, '終了期限' %>
-  <%= form.text_field :deadline %>
+  <%= form.datetime_select :deadline %>
   <%= form.label :status, '状態' %>
-  <%= form.text_field :status %>
+  <%= form.select :status,[[include_blank: true], ["完了","完了"],["着手中","着手中"],["未着手","未着手"]]%>
   <%= form.label :priority, '優先順位' %>
-  <%= form.text_field :priority %>
+  <%= form.select :priority,Task.priorities.keys, include_blank: true %>
   <%= form.label :author, '作者' %>
   <%= form.text_field :author %>
 

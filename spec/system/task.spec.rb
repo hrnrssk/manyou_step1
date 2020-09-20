@@ -1,6 +1,6 @@
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
-  let(:task_let) { FactoryBot.create(:task, name: 'task', detail: 'テスト', deadline: '2020/08/31', status: '未着手', priority: '1', author: 'sasaki') }
+  let(:task_let) { FactoryBot.create(:task, name: 'task', detail: 'テスト', deadline: '2020/08/01', status: '未着手', priority: '低', author: 'sasaki') }
   before do
     # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
     FactoryBot.create(:task)
@@ -19,8 +19,8 @@ describe 'タスク管理機能', type: :system do
         # ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
         fill_in '内容', with: 'テスト０１をテストする'
         fill_in '終了期限', with: '2020/08/27'
-        fill_in '状態', with: '未着手'
-        fill_in '優先順位', with: '3'
+        select '未着手', from: '状態'
+        select '低', from: '優先順位'
         fill_in '作者', with: '佐々木'
         # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
         # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
@@ -31,7 +31,8 @@ describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'テスト０１'
         expect(page).to have_content 'テスト０１をテストする'
         expect(page).to have_content '2020/08/27'
-        expect(page).to have_content '3'
+        expect(page).to have_content '未着手'
+        expect(page).to have_content '低'
         expect(page).to have_content '佐々木'
       end
     end
@@ -53,12 +54,42 @@ describe 'タスク管理機能', type: :system do
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
         # テストで使用するためのタスクを作成
-        # task = FactoryBot.create(:task, name: 'task', detail: 'テスト', deadline: '2020/08/31', status: '未着手', priority: '1', author: 'sasaki')
         task = task_let
         # タスク一覧ページに遷移
         visit tasks_path
         task_list = all('.task_row')
+        # binding.irb
         expect(task_list[0]).to have_content 'task'
+      end
+    end
+    context 'タスクが終了期限の降順にソートされている場合' do
+      it '"終了期限でソートする"ボタンを押すと終了期限が遅いタスクから降順で並び替えられる' do
+        # テストで使用するためのタスクを作成
+        task = task_let
+        # タスク一覧ページに遷移
+        visit tasks_path
+        click_on '終了期限でソートする'
+        expect(all('.task_row')[0]).to have_content '2020/08/20'
+        expect(all('.task_row')[1]).to have_content '2020/08/10'
+        expect(all('.task_row')[2]).to have_content '2020/08/01'
+        # binding.irb
+        # all('tr td')[6].click_on '詳細'
+        # expect(page).to have_content '2020/08/20'
+      end
+    end
+    context 'タスクが優先順位の高い順にソートされている場合' do
+      it '"優先順位でソートする"ボタンを押すと優先順位が高いタスクから順に並び替えられる' do
+        # テストで使用するためのタスクを作成
+        task = task_let
+          # タスク一覧ページに遷移
+        visit tasks_path
+        click_on '優先順位でソートする'
+        expect(all('.task_row')[0]).to have_content '高'
+        expect(all('.task_row')[1]).to have_content '中'
+        expect(all('.task_row')[2]).to have_content '低'
+        # binding.irb
+        # all('tr td')[6].click_on '詳細'
+        # expect(page).to have_content '高'
       end
     end
   end
@@ -75,13 +106,53 @@ describe 'タスク管理機能', type: :system do
         # ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
         fill_in '内容', with: 'テスト０２をテストする'
         fill_in '終了期限', with: '2020/08/30'
-        fill_in '状態', with: '未着手'
-        fill_in '優先順位', with: '4'
+        select '未着手', from: '状態'
+        select '低', from: '優先順位'
         fill_in '作者', with: '洋典'
         # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
         # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
         click_on '登録する'
         expect(page).to have_content 'テスト０２'
+      end
+    end
+  end
+  describe 'タスク管理機能', type: :system do
+    describe '検索機能' do
+      before do
+        # 必要に応じて、テストデータの内容を変更して構わない
+        FactoryBot.create(:task, name: 'task1', detail: 'テスト1', deadline: '2020/08/1', status: '着手中', priority: '高', author: 'sasaki')
+        FactoryBot.create(:second_task, name: 'task2', detail: 'テスト2', deadline: '2020/08/2', status: '未着手', priority: '中', author: 'hironori')
+      end
+      context 'タイトルであいまい検索をした場合' do
+        it "検索キーワードを含むタスクで絞り込まれる" do
+          visit tasks_path
+          # タスクの検索欄に検索ワードを入力する (例: task)
+          fill_in 'タスク名で検索', with: 'task1'
+          # 検索ボタンを押す
+          click_on '検索'
+          expect(page).to have_content 'task1'
+          expect(page).not_to have_content 'task2'
+        end
+      end
+      context 'ステータス検索をした場合' do
+        it "ステータスに完全一致するタスクが絞り込まれる" do
+          # ここに実装する
+          # プルダウンを選択する「select」について調べてみること
+          visit tasks_path
+          select '未着手', from: '状態'
+          click_on '検索'
+          expect(page).to have_content '未着手'
+        end
+      end
+      context 'タイトルのあいまい検索とステータス検索をした場合' do
+        it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+          # ここに実装する
+          visit tasks_path
+          fill_in 'タスク名で検索', with: 'task'
+          select '未着手', from: '状態'
+          click_on '検索'
+          expect(page).to have_content 'task2'
+        end
       end
     end
   end
