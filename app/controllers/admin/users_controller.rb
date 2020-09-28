@@ -14,6 +14,12 @@ class Admin::UsersController < ApplicationController
   def if_not_admin
     redirect_to root_path unless current_user.admin?
   end
+  
+  # def if_not_admin
+  #   unless current_user&.admin?
+  #     redirect_to root_path
+  #   end
+  # end
 
   def set_user
     @user = User.find(params[:id])
