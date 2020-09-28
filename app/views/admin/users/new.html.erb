@@ -1,4 +1,4 @@
-<h1>プロフィール編集</h1>
+<h1>Sign up</h1>
 
 <% if @user.errors.any? %>
   <div id="error_explanation">
@@ -22,5 +22,5 @@
   <%= f.password_field :password_confirmation %>
   <%= f.label :admin, 'Admin権限' %>
   <%= f.check_box :admin %>
-  <%= f.submit "更新する" %>
+  <%= f.submit "Create my account" %>
 <% end %>

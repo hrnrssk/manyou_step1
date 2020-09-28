@@ -1,0 +1,26 @@
+<h1>管理画面のユーザー一覧画面</h1>
+
+<div class="signup">
+<%= link_to "ユーザーの新規作成", new_admin_user_path %>
+</div>
+
+<table class="admin_users">
+  <thead>
+    <tr>
+      <th>ユーザーID</th>
+      <th>ユーザー名</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr class="user_row">
+        <td class="user_id"><%= user.id %></td>
+        <td class="user_name"><%= user.user_name %></td>
+        <td><%= link_to '詳細', user, class: 'btn btn-primary' %>
+        <td><%= link_to '削除', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+      </tr>
+    <% end %>
+    <%= paginate @users %>
+  </tbody>
+</table>
