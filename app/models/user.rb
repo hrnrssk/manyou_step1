@@ -9,13 +9,6 @@ class User < ApplicationRecord
 
   before_destroy :must_not_destroy_last_one_user
 
-  # def must_not_destroy_last_one_user
-  #   if User.where(admin: true).count == 1 && self.admin
-  #     errors.add :base, '少なくとも1つ、ログイン用の認証が必要です'
-  #     throw :abort
-  #   end
-  # end
-
   def must_not_destroy_last_one_user
     if User.where(admin: true).count == 1 && self.admin
       throw :abort

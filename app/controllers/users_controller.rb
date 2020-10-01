@@ -8,21 +8,15 @@ class UsersController < ApplicationController
     
   end
 
-  # def create
-  #   @user = User.new(user_params)
-  #   if @user.save
-  #     session[:user_id] = @user.id
-  #     redirect_to user_path(@user.id)
-  #   else
-  #     render :new
-  #   end
-  # end
-
   def create
-    if admin_user?
-      @user = User.new(user_params)
-      if @user.save
-        redirect_to admin_users_path
+    if logged_in?
+      if admin_user?
+        @user = User.new(user_params)
+        if @user.save
+          redirect_to admin_users_path
+        else
+          render :new
+        end
       else
         render :new
       end
