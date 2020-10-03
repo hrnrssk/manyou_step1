@@ -17,8 +17,8 @@
       <tr class="user_row">
         <td class="user_id"><%= user.id %></td>
         <td class="user_name"><%= user.user_name %></td>
-        <td><%= link_to '詳細', user, class: 'btn btn-primary' %>
-        <td><%= link_to '削除', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+        <td><%= link_to '詳細', user_path(user.id), class: 'btn btn-primary' %>
+        <td><%= link_to '削除', user_path(user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
     <%= paginate @users %>

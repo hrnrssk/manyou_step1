@@ -32,7 +32,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    if session[:user_id] == params[:id].to_i
+    if admin_user?
+      @user = User.find(params[:id])
+    elsif session[:user_id] == params[:id].to_i
       @user = User.find(params[:id])
     else
       redirect_to tasks_path

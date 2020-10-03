@@ -10,6 +10,9 @@ class Admin::UsersController < ApplicationController
     @user = User.new
   end
 
+  def show
+  end
+
   private
   def if_not_admin
     redirect_to root_path unless current_user.admin?

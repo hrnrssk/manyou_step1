@@ -6,17 +6,17 @@ FactoryBot.define do
     admin { true }
   end
 
-  factory :second_user do
+  factory :second_user, class: User do
     user_name { "test2" }
     email { "test2@g.com" }
     password { "222222" }
-    admin { true }
+    admin { false }
   end
 
-  factory :third_user do
+  factory :third_user, class: User do
     user_name { "test3" }
     email { "test3@g.com" }
     password { "333333" }
-    admin { true }
+    admin { false }
   end
 end
