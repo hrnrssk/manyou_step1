@@ -101,11 +101,12 @@ RSpec.describe 'ユーザー機能', type: :system do
         expect(page).to have_content 'ユーザーP2'
         expect(page).to have_content 'pub@example.com'
       end
-      it 'ユーザの削除をできること' do
+      it 'ユーザの削除ができること' do
         visit admin_users_path
         all('tr td')[7].click_on '削除'
         page.accept_confirm "Are you sure?"
         expect(page).to have_content 'ユーザーは削除されました'
+        binding.irb
       end
     end
     context '一般ユーザーの場合' do
@@ -119,8 +120,8 @@ RSpec.describe 'ユーザー機能', type: :system do
       end
       it '管理画面にアクセスできないこと' do
         visit admin_users_path
-        binding.irb
         expect(page).to have_content 'タスク一覧'
+        binding.irb
       end
     end
   end
