@@ -2,15 +2,23 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(3)
-    if params[:task].present?
-      @tasks = @tasks.search_with_name_and_status(params[:task][:name], params[:task][:status]) if params[:task][:name].present? && params[:task][:status].present?
-      @tasks = @tasks.search_with_name(params[:task][:name]) if params[:task][:name].present?
-      @tasks = @tasks.search_with_status(params[:task][:status]) if params[:task][:status].present?
-    elsif params[:sort_expired].present?
-      @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(3)
-    elsif params[:sort_priority].present?
-      @tasks = Task.all.order(priority: :asc).page(params[:page]).per(3)
+    if logged_in?
+    # @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(3)
+      @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(3)
+      if params[:task].present?
+        @tasks = @tasks.search_with_name_and_status(params[:task][:name], params[:task][:status]) if params[:task][:name].present? && params[:task][:status].present?
+        @tasks = @tasks.search_with_name(params[:task][:name]) if params[:task][:name].present?
+        @tasks = @tasks.search_with_status(params[:task][:status]) if params[:task][:status].present?
+      elsif params[:sort_expired].present?
+        # @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(3)
+        @tasks = current_user.tasks.order(deadline: :desc).page(params[:page]).per(3)
+      elsif params[:sort_priority].present?
+        # @tasks = Task.all.order(priority: :asc).page(params[:page]).per(3)
+        @tasks = current_user.tasks.order(priority: :asc).page(params[:page]).per(3)
+      end
+    else
+      flash[:notice] = "ログインしてください"
+      redirect_to new_session_path
     end
   end
 
@@ -19,10 +27,11 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.create(task_params)
+    # @task = Task.create(task_params)
+    @task = current_user.tasks.create(task_params)
     respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: 'Feed was successfully created.' }
+        format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new }
@@ -64,6 +73,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:name, :detail, :deadline, :status, :priority, :author)
+      params.require(:task).permit(:name, :detail, :deadline, :status, :priority)
     end
 end

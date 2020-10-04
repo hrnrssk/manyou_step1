@@ -10,11 +10,38 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <header class="header">
-      <div class="newfeed">
-        <%= link_to 'タスク登録', new_task_path %>
+      <div class="newtask">
+      <% if logged_in?%>
+        <div class="login-username">
+          <p>ログインユーザー名: <%= current_user.user_name %></p>
+        </div>
+        <div class="user_logout">
+          <div class="logout">
+            <%= link_to "Logout", session_path(current_user.id), method: :delete %>
+          </div>
+        </div>
+        <div class="profile_edit">
+          <%= link_to 'プロフィール', edit_user_path(current_user) %>
+        </div>
+        <div class="newtask">
+          <%= link_to 'タスク登録', new_task_path %>
+        </div>
+      <% else %>
+        <div class="user_status">
+          <div class="signup">
+            <%= link_to "Sign up", new_user_path %>
+          </div>
+          <div class="login">
+            <%= link_to "Login", new_session_path %>
+          </div>
+        </div> 
+      <% end %>
       </div>
   </header>
   <body>
+    <% flash.each do |key, value| %>
+      <%= content_tag(:div, value, class: "#{key}") %>
+    <% end %>
     <%= yield %>
   </body>
 </html>

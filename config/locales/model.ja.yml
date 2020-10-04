@@ -13,7 +13,7 @@ ja:
         author: 作者
       user:
         name: タスク名
-        username: 名前
+        user_name: ユーザー名
         email: メールアドレス
         current_password: 現在のパスワード
         password: パスワード

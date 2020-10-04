@@ -45,6 +45,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     arel (9.0.0)
+    bcrypt (3.1.11)
     bindex (0.8.1)
     bootsnap (1.4.8)
       msgpack (~> 1.0)
@@ -68,6 +69,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.7)
     crass (1.0.6)
+    database_cleaner (1.8.5)
     diff-lcs (1.4.4)
     erubi (1.9.0)
     execjs (2.7.0)
@@ -226,10 +228,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt (= 3.1.11)
   bootsnap (>= 1.1.0)
   byebug
   capybara (>= 2.15)
   coffee-rails (~> 4.2)
+  database_cleaner
   factory_bot_rails
   jbuilder (~> 2.5)
   kaminari
