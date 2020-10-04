@@ -106,7 +106,6 @@ RSpec.describe 'ユーザー機能', type: :system do
         all('tr td')[7].click_on '削除'
         page.accept_confirm "Are you sure?"
         expect(page).to have_content 'ユーザーは削除されました'
-        binding.irb
       end
     end
     context '一般ユーザーの場合' do
@@ -121,7 +120,6 @@ RSpec.describe 'ユーザー機能', type: :system do
       it '管理画面にアクセスできないこと' do
         visit admin_users_path
         expect(page).to have_content 'タスク一覧'
-        binding.irb
       end
     end
   end
