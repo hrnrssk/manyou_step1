@@ -5,4 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create(user_name: "sasaki", email: "a@g.com", password: "aaaaaa")
+User.create(user_name: "sasaki", email: "a@g.com", password: "aaaaaa", admin: "true")
+
+5.times do |i|
+    Label.create!(name: "sample#{i + 1}")
+end

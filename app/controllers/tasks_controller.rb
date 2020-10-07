@@ -3,17 +3,16 @@ class TasksController < ApplicationController
 
   def index
     if logged_in?
-    # @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(3)
       @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(3)
       if params[:task].present?
+        label = Label.find(params[:task][:label_id]) if params[:task][:label_id].present?
+        @tasks = label.tasks.where(user_id: current_user.id).page(params[:page]).per(3)
         @tasks = @tasks.search_with_name_and_status(params[:task][:name], params[:task][:status]) if params[:task][:name].present? && params[:task][:status].present?
         @tasks = @tasks.search_with_name(params[:task][:name]) if params[:task][:name].present?
         @tasks = @tasks.search_with_status(params[:task][:status]) if params[:task][:status].present?
       elsif params[:sort_expired].present?
-        # @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(3)
         @tasks = current_user.tasks.order(deadline: :desc).page(params[:page]).per(3)
       elsif params[:sort_priority].present?
-        # @tasks = Task.all.order(priority: :asc).page(params[:page]).per(3)
         @tasks = current_user.tasks.order(priority: :asc).page(params[:page]).per(3)
       end
     else
@@ -73,6 +72,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:name, :detail, :deadline, :status, :priority)
+      params.require(:task).permit(:name, :detail, :deadline, :status, :priority, label_ids: [])
     end
 end

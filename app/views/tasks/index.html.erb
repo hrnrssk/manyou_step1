@@ -11,7 +11,20 @@
 
   <div class="task_status">
     <%= f.label(:status, '状態で検索') %>
-    <%= f.select :status, [["完了","完了"],["着手中","着手中"],["未着手","未着手"]], {include_blank: true} %>
+    <%= f.select :status, [["完了","完了"],["着手中","着手中"],["未着手","未着手"]], include_blank: true %>
+  </div>
+
+  <%
+=begin%>
+ <div class="task_label">
+  <%= f.label(:status, 'ラベルで検索') %>
+    <%= f.select :label_id, Label.all.collect { |l|[ l.name, l.id ] }, include_blank: true %>
+  </div> 
+<%
+=end%>
+    <div class="task_label">
+  <%= f.label(:status, 'ラベルで検索') %>
+    <%= f.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
   </div>
 
   <%= f.submit('検索') %>
@@ -25,6 +38,7 @@
       <th>終了期限</th>
       <th>状態</th>
       <th>優先順位</th>
+      <th>ラベル</th>
     </tr>
   </thead>
 
@@ -36,6 +50,11 @@
         <td class="task_deadline"><%= task.deadline %></td>
         <td class="task_status"><%= task.status %></td>
         <td class="task_priority"><%= task.priority %></td>
+        <td>
+          <% task.labels.each do |label| %>
+          <%= label.name %>
+          <% end %>
+        </td>
         <td><%= link_to '詳細', task, class: 'btn btn-primary' %></td>
         <td><%= link_to '編集', edit_task_path(task), class: 'btn btn-success' %></td>
         <td><%= link_to '削除', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>

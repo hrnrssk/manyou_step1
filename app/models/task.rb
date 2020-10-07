@@ -8,8 +8,10 @@ class Task < ApplicationRecord
   scope :search_with_name, -> (search_params) { where(['name LIKE ?', "%#{ search_params }%"]) }
   scope :search_with_status, -> (search_params) { where(['status = ?', "#{ search_params }"]) }
   scope :search_with_name_and_status, -> (name, status) { where(['name LIKE ? and status = ?', "%#{ name }%", "#{ status }"])}
-
+  # scope :search_with_name_and_status_and_label, -> (name, status, label) { where(['name LIKE ? and status = ? and label_id = ?', "%#{ name }%", "#{ status }", "#{ label_id }"])}
   enum priority:{ 高: 0, 中: 1, 低: 2 }
 
   belongs_to :user
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings
 end
