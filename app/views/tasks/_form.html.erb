@@ -21,19 +21,14 @@
   <%= form.select :status,[[include_blank: true], ["完了","完了"],["着手中","着手中"],["未着手","未着手"]]%>
   <%= form.label :priority, '優先順位' %>
   <%= form.select :priority,Task.priorities.keys, include_blank: true %><br>
+  <%= form.label :label, 'ラベル' %>
+  <% 5.times do |i| Label.create!(name: "sample#{i + 1}") %>
+  <% end %>
   <% Label.all.each do |label| %>
     <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
-    <%= label.name %>
-  <% end %>
+    <%= label.name %> 
+  <% end %> 
   <br>
-  <%
-=begin%>
- <%= form.label :label, 'ラベル' %>
-  <div class="checkbox-inline">
-  <%= form.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
-  </div><br> 
-<%
-=end%>
   <%= form.submit '登録する' %>
 
 <% end %>
