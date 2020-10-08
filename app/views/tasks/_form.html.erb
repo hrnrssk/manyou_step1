@@ -22,8 +22,12 @@
   <%= form.label :priority, '優先順位' %>
   <%= form.select :priority,Task.priorities.keys, include_blank: true %><br>
   <%= form.label :label, 'ラベル' %>
-  <% 5.times do |i| Label.create!(name: "sample#{i + 1}") %>
-  <% end %>
+  <%
+=begin%>
+ <% 5.times do |i| Label.create!(name: "sample#{i + 11}") %>
+  <% end %> 
+<%
+=end%>
   <% Label.all.each do |label| %>
     <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
     <%= label.name %> 

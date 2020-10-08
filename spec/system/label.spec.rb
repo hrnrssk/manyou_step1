@@ -27,7 +27,6 @@ RSpec.describe 'ラベル機能', type: :system do
         select "2020", from: "task[deadline(1i)]"
         select "8月", from: "task[deadline(2i)]"
         select "27", from: "task[deadline(3i)]"
-        # fill_in '終了期限', with: '2020/08/27'
         select '未着手', from: '状態'
         select '低', from: '優先順位'
         # binding.irb
@@ -35,12 +34,8 @@ RSpec.describe 'ラベル機能', type: :system do
         check 'task_label_ids_2'
         # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
         # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
-        # current_user = @user
         click_on '登録する'
         # binding.irb
-        # 4. clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
-        # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
-        # ここにタスク詳細ページに、テストコードで作成したデータがタスク詳細画面にhave_contentされているか（含まれているか）を確認（期待）するコードを書く
         expect(page).to have_content 'テスト０１'
         expect(page).to have_content 'テスト０１をテストする'
         expect(page).to have_content '2020-08-27'
