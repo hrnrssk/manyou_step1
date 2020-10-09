@@ -18,6 +18,7 @@ RSpec.describe 'ユーザー機能', type: :system do
       it 'ログイン画面に遷移すること' do
         # 一覧画面に遷移する
         visit tasks_path
+        # binding.irb
         expect(page).to have_content 'ログインしてください'
       end
     end
@@ -105,6 +106,7 @@ RSpec.describe 'ユーザー機能', type: :system do
         visit admin_users_path
         all('tr td')[7].click_on '削除'
         page.accept_confirm "Are you sure?"
+        # binding.irb
         expect(page).to have_content 'ユーザーは削除されました'
       end
     end
