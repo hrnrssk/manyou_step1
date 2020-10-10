@@ -14,14 +14,6 @@
     <%= f.select :status, [["完了","完了"],["着手中","着手中"],["未着手","未着手"]], include_blank: true %>
   </div>
 
-  <%
-=begin%>
- <div class="task_label">
-  <%= f.label(:status, 'ラベルで検索') %>
-    <%= f.select :label_id, Label.all.collect { |l|[ l.name, l.id ] }, include_blank: true %>
-  </div> 
-<%
-=end%>
     <div class="task_label">
   <%= f.label(:status, 'ラベルで検索') %>
     <%= f.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
