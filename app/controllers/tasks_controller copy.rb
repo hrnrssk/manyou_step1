@@ -17,15 +17,11 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.create(task_params)
-    respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: 'Feed was successfully created.' }
-        format.json { render :show, status: :created, location: @task }
+        redirect_to @task, notice: 'Feed was successfully created.'
       else
-        format.html { render :new }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        render :new
       end
-    end
   end
 
   def show; end
@@ -33,23 +29,16 @@ class TasksController < ApplicationController
   def edit; end
 
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.update(task_params)
+      redirect_to @task, notice: 'Task was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @task.destroy
-    respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+      redirect_to tasks_url, notice: 'Task was successfully destroyed.'
   end
 
   private

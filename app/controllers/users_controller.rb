@@ -53,24 +53,17 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'プロフィールは更新されました' }
-        format.json { render :show, status: :ok, location: @user }
+        redirect_to @user, notice: 'プロフィールは更新されました'
       else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        render :edit
       end
-    end
   end
 
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to admin_users_path, notice: 'ユーザーは削除されました' }
-      format.json { head :no_content }
-    end
+      redirect_to admin_users_path, notice: 'ユーザーは削除されました'
   end
 
   private
