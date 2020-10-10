@@ -30,8 +30,8 @@ RSpec.describe 'ラベル機能', type: :system do
         select '未着手', from: '状態'
         select '低', from: '優先順位'
         # binding.irb
-        check 'task_label_ids_1'
-        check 'task_label_ids_2'
+        check 'task_label_ids_1', from: 'ラベル'
+        check 'task_label_ids_2', from: 'ラベル'
         # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
         # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
         click_on '登録する'
