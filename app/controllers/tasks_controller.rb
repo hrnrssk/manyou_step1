@@ -2,24 +2,6 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-  #   if logged_in?
-  #     @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(3)
-  #     if params[:task].present?
-  #       label = Label.find(params[:task][:label_id]) if params[:task][:label_id].present?
-  #       @tasks = label.tasks.where(user_id: current_user.id).page(params[:page]).per(3)
-  #       @tasks = @tasks.search_with_name_and_status(params[:task][:name], params[:task][:status]) if params[:task][:name].present? && params[:task][:status].present?
-  #       @tasks = @tasks.search_with_name(params[:task][:name]) if params[:task][:name].present?
-  #       @tasks = @tasks.search_with_status(params[:task][:status]) if params[:task][:status].present?
-  #     elsif params[:sort_expired].present?
-  #       @tasks = current_user.tasks.order(deadline: :desc).page(params[:page]).per(3)
-  #     elsif params[:sort_priority].present?
-  #       @tasks = current_user.tasks.order(priority: :asc).page(params[:page]).per(3)
-  #     end
-  #   else
-  #     flash[:notice] = "ログインしてください"
-  #     redirect_to new_session_path
-  #   end
-  # end
   if logged_in?
     @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(3)
     if params[:task].present?
