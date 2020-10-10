@@ -17,7 +17,7 @@ label8 = Label.create!(name: "sample8")
 label9 = Label.create!(name: "sample9")
 label10 = Label.create!(name: "sample10")
 
-@user1 = User.create(user_name: "sasaki", email: "a@g.com", password: "aaaaaa", admin: "true")
+@user1 = User.create(user_name: "sasaki", email: "a@example.com", password: "aaaaaa", admin: "true")
 task1 = Task.create(name: "sasaki_task1", detail: "detail1", deadline: "2020/08/09", status: "未着手", priority: "低", user: @user1)
 task1.labels << label1
 task1.labels << label2
@@ -47,7 +47,7 @@ task6.labels << label10
 task6.save
 
 
-@user2 = User.create(user_name: "hiro", email: "b@g.com", password: "bbbbbb", admin: "true")
+@user2 = User.create(user_name: "hiro", email: "b@example.com", password: "bbbbbb", admin: "true")
 task7 = Task.create(name: "hiro_task1", detail: "detail7", deadline: "2020/08/09", status: "未着手", priority: "低", user: @user2)
 task7.labels << label1
 task7.labels << label2
@@ -63,7 +63,7 @@ task9.labels << label4
 task9.labels << label7
 task9.save
 
-@user3 = User.create(user_name: "nori", email: "c@g.com", password: "cccccc", admin: "true")
+@user3 = User.create(user_name: "nori", email: "c@example.com", password: "cccccc", admin: "true")
 task10 = Task.create(name: "nori_task1", detail: "detail10", deadline: "2020/08/09", status: "未着手", priority: "低", user: @user3)
 task10.labels << label4
 task10.labels << label5
