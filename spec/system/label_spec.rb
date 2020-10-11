@@ -29,12 +29,13 @@ RSpec.describe 'ラベル機能', type: :system do
         select "27", from: "task[deadline(3i)]"
         select '未着手', from: '状態'
         select '低', from: '優先順位'
-        binding.irb
+        # binding.irb
         check 'task_label_ids_1'
         check 'task_label_ids_2'
         # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
         # ここに「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
         click_on '登録する'
+        sleep 1
         # binding.irb
         expect(page).to have_content 'テスト０１'
         expect(page).to have_content 'テスト０１をテストする'
