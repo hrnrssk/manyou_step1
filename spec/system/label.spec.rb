@@ -29,7 +29,7 @@ RSpec.describe 'ラベル機能', type: :system do
         select "27", from: "task[deadline(3i)]"
         select '未着手', from: '状態'
         select '低', from: '優先順位'
-        # binding.irb
+        binding.irb
         check 'task_label_ids_1', from: 'ラベル'
         check 'task_label_ids_2', from: 'ラベル'
         # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする

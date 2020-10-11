@@ -77,7 +77,7 @@ task12.labels << label10
 task12.save
 
 10.times do |i|
-    User.create!(user_name: "test_user#{i + 1}", email: "test#{i + 1}@g.com", password: "ddddd#{i + 1}", admin: "false")
+    User.create!(user_name: "test_user#{i + 1}", email: "test#{i + 1}@g.com", password: "dddddd", admin: "false")
 end
 
 
