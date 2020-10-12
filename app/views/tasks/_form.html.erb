@@ -20,8 +20,13 @@
   <%= form.label :status, '状態' %>
   <%= form.select :status,[[include_blank: true], ["完了","完了"],["着手中","着手中"],["未着手","未着手"]]%>
   <%= form.label :priority, '優先順位' %>
-  <%= form.select :priority,Task.priorities.keys, include_blank: true %>
-
+  <%= form.select :priority,Task.priorities.keys, include_blank: true %><br>
+  <%= form.label :label, 'ラベル' %>
+  <% Label.all.each do |label| %>
+    <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+    <%= label.name %> 
+  <% end %> 
+  <br>
   <%= form.submit '登録する' %>
 
 <% end %>

@@ -10,8 +10,7 @@ class Admin::UsersController < ApplicationController
     @user = User.new
   end
 
-  def show
-  end
+  def show; end
 
   private
   def if_not_admin
